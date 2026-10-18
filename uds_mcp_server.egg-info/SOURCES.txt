@@ -1,0 +1,11 @@
+README.md
+pyproject.toml
+src/__init__.py
+src/repository.py
+src/scraper.py
+src/server.py
+uds_mcp_server.egg-info/PKG-INFO
+uds_mcp_server.egg-info/SOURCES.txt
+uds_mcp_server.egg-info/dependency_links.txt
+uds_mcp_server.egg-info/requires.txt
+uds_mcp_server.egg-info/top_level.txt

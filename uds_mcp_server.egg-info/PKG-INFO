@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: uds-mcp-server
+Version: 0.1.0
+Summary: MCP server for looking up UDS (ISO 14229) diagnostic services
+Requires-Python: >=3.10
+Requires-Dist: beautifulsoup4>=4.15.0
+Requires-Dist: langchain>=1.4.6
+Requires-Dist: langchain-community>=0.4.2
+Requires-Dist: python-dotenv>=1.2.4
+Requires-Dist: requests>=2.34.2

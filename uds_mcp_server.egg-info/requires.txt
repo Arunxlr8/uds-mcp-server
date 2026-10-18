@@ -1,0 +1,5 @@
+beautifulsoup4>=4.15.0
+langchain>=1.4.6
+langchain-community>=0.4.2
+python-dotenv>=1.2.4
+requests>=2.34.2
