@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "uds-mcp-server"
-version = "0.1.0"
+version = "0.2.0"
 description = "MCP server for looking up UDS (ISO 14229) diagnostic services"
 requires-python = ">=3.10"
 dependencies = [
