@@ -86,7 +86,7 @@ def parse_services(soup) -> list[dict]:
 
     request_col = _column_index(headers, "request service identifier")
     response_col = _column_index(headers, "response service identifier")
-    name_col = _column_index(headers, "service name", "service")
+    name_col = _column_index(headers, "service name")
     desc_col = _column_index(headers, "description")
 
     if None in (request_col, response_col, name_col, desc_col):

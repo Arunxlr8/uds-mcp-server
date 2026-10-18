@@ -1,162 +1,162 @@
 [
   {
-    "name": "0x10",
+    "name": "DiagnosticSessionControl",
     "request_sid": "0x10",
     "response_sid": "0x50",
     "description": "DiagnosticSessionControl service is used to change diagnostic sessions in the server(s). In each diagnostic session a different set of diagnostic services (and/or functionalities) is enabled in the server. Server shall always be in exactly one diagnostic session."
   },
   {
-    "name": "0x11",
+    "name": "ECUReset",
     "request_sid": "0x11",
     "response_sid": "0x51",
     "description": "ECUReset service is used by the client to request that the server perform a reset. The server, after receiving this request, performs the specified type of reset (either before or after transmitting the positive response)."
   },
   {
-    "name": "0x14",
+    "name": "ClearDiagnosticInformation",
     "request_sid": "0x14",
     "response_sid": "0x54",
     "description": "ClearDiagnosticInformation service is used by the client to clear Diagnostic Trouble Codes (DTCs) and related data stored in one or more server memories."
   },
   {
-    "name": "0x19",
+    "name": "ReadDTCInformation",
     "request_sid": "0x19",
     "response_sid": "0x59",
     "description": "ReadDTCInformation service allows the client to request current Diagnostic Trouble Code (DTC) information from one or more servers within the vehicle."
   },
   {
-    "name": "0x22",
+    "name": "ReadDataByIdentifier",
     "request_sid": "0x22",
     "response_sid": "0x62",
     "description": "ReadDataByIdentifier service allows the client to request data record values from the server identifier by one or more DataIdentifiers (DIDs)."
   },
   {
-    "name": "0x23",
+    "name": "ReadMemoryByAddress",
     "request_sid": "0x23",
     "response_sid": "0x63",
     "description": "ReadMemoryByAddress service allows the client to request server's memory data stored under provided memory address."
   },
   {
-    "name": "0x24",
+    "name": "ReadScalingDataByIdentifier",
     "request_sid": "0x24",
     "response_sid": "0x64",
     "description": "ReadScalingDataByIdentifier service allows the client to request the scaling information associated with a Data Identifier (DID). Scaling data provides information required to correctly interpret the actual data value, such as: data encoding type (e.g. integer, floating-point, ASCII) units and formats conversion formulas and coefficients bit mappings, and other interpretation details"
   },
   {
-    "name": "0x27",
+    "name": "SecurityAccess",
     "request_sid": "0x27",
     "response_sid": "0x67",
     "description": "SecurityAccess service allows the client to unlock functions/services with restricted access. Unlocking sequence: The client requests a seed from the server. The server responds with a positive response that includes a randomly generated seed value. Both the client and server compute a key value based on the seed (using a secret algorithm). The client sends the computed key to the server. The server validates the client by comparing the received key with its own calculated key. If they match, the client is granted access to the protected functionality for the corresponding security level."
   },
   {
-    "name": "0x28",
+    "name": "CommunicationControl",
     "request_sid": "0x28",
     "response_sid": "0x68",
     "description": "CommunicationControl service allows the client to switch on/off the transmission and/or the reception of certain messages on the server(s)."
   },
   {
-    "name": "0x29",
+    "name": "Authentication",
     "request_sid": "0x29",
     "response_sid": "0x69",
     "description": "Authentication service provides a mechanism for the client to prove its identity, allowing access to data and/or diagnostic services that have restricted access due to security, emissions, or safety requirements. It is an alternative for SecurityAccess service."
   },
   {
-    "name": "0x2A",
+    "name": "ReadDataByPeriodicIdentifier",
     "request_sid": "0x2a",
     "response_sid": "0x6a",
     "description": "ReadDataByPeriodicIdentifier service allows the client to request periodic transmission of data record values from the server. Each periodic data record is identified by Periodic DID (the second byte of a DID with a fixed first byte 0xF2)."
   },
   {
-    "name": "0x2C",
+    "name": "DynamicallyDefineDataIdentifier",
     "request_sid": "0x2c",
     "response_sid": "0x6c",
     "description": "DynamicallyDefineDataIdentifier service allows the client to define Data Identifiers."
   },
   {
-    "name": "0x2E",
+    "name": "WriteDataByIdentifier",
     "request_sid": "0x2e",
     "response_sid": "0x6e",
     "description": "WriteDataByIdentifier service allows the client to set data values stored under given Data Identifier."
   },
   {
-    "name": "0x2F",
+    "name": "InputOutputControlByIdentifier",
     "request_sid": "0x2f",
     "response_sid": "0x6f",
     "description": "InputOutputControlByIdentifier service allows the client to take temporary control over Data Identifier values."
   },
   {
-    "name": "0x31",
+    "name": "RoutineControl",
     "request_sid": "0x31",
     "response_sid": "0x71",
     "description": "RoutineControl service allows the client to execute any sequence of actions that are defined as routines. Each routine has Routine Identifier assigned."
   },
   {
-    "name": "0x34",
+    "name": "RequestDownload",
     "request_sid": "0x34",
     "response_sid": "0x74",
     "description": "RequestDownload service allows the client to initiate data transfer from the client to the server."
   },
   {
-    "name": "0x35",
+    "name": "RequestUpload",
     "request_sid": "0x35",
     "response_sid": "0x75",
     "description": "RequestUpload service allows the client to initiate data transfer from the server to the client."
   },
   {
-    "name": "0x36",
+    "name": "TransferData",
     "request_sid": "0x36",
     "response_sid": "0x76",
     "description": "TransferData service transfers the actual data that were earlier requested by either RequestDownload, RequestUpload or RequestFileTransfer service."
   },
   {
-    "name": "0x37",
+    "name": "RequestTransferExit",
     "request_sid": "0x37",
     "response_sid": "0x77",
     "description": "RequestTransferExit services ends the data transmission using TransferData service."
   },
   {
-    "name": "0x38",
+    "name": "RequestFileTransfer",
     "request_sid": "0x38",
     "response_sid": "0x78",
     "description": "RequestFileTransfer service allows the client to initiate a file transfer (either download or upload). It is an alternative for RequestDownload and RequestUpload services."
   },
   {
-    "name": "0x3D",
+    "name": "WriteMemoryByAddress",
     "request_sid": "0x3d",
     "response_sid": "0x7d",
     "description": "WriteMemoryByAddress service allows the client to set values directly in the server's memory."
   },
   {
-    "name": "0x3E",
+    "name": "TesterPresent",
     "request_sid": "0x3e",
     "response_sid": "0x7e",
     "description": "TesterPresent service informs server(s) that the diagnostic tester device (client) is connected and server(s) shall not exit their current diagnostic session."
   },
   {
-    "name": "0x83",
+    "name": "AccessTimingParameter",
     "request_sid": "0x83",
     "response_sid": "0xc3",
     "description": "AccessTimingParameter was withdrawn in ISO 14229-1:2020."
   },
   {
-    "name": "0x84",
+    "name": "SecuredDataTransmission",
     "request_sid": "0x84",
     "response_sid": "0xc4",
     "description": "SecuredDataTransmission service allows the client to secure UDS communication using either encryption or signature."
   },
   {
-    "name": "0x85",
+    "name": "ControlDTCSettings",
     "request_sid": "0x85",
     "response_sid": "0xc5",
     "description": "ControlDTCSettings service allows the client to manage DTCs' statuses updating."
   },
   {
-    "name": "0x86",
+    "name": "ResponseOnEvent",
     "request_sid": "0x86",
     "response_sid": "0xc6",
     "description": "ResponseOnEvent service allows the client to define events and request messages that the server is supposed to respond to when the event occurs. This can be used to diagnose complicated issues. For example the client can request from the server to respond to ReadMemoryByAddress request (to provide detailed information about the reason for DTC reporting) when testFailed bit of a certain DTC is set."
   },
   {
-    "name": "0x87",
+    "name": "LinkControl",
     "request_sid": "0x87",
     "response_sid": "0xc7",
     "description": "LinkControl service allows the client to change physical connection parameters. As an example, for CAN bus, the client could change baudrate and version of CAN protocol (e.g. from CAN-FD to Classical CAN)."

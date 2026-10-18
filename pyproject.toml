@@ -11,6 +11,8 @@ dependencies = [
     "beautifulsoup4>=4.15.0",
     "langchain>=1.4.6",
     "langchain-community>=0.4.2",
+    "langchain-openai>=1.7.2",
+    "mcp<2.0.0",
     "python-dotenv>=1.2.4",
     "requests>=2.34.2",
 ]
