@@ -7,6 +7,7 @@ concrete UDS implementation backed by the scraped JSON file.
 """
 
 from __future__ import annotations
+
 import json
 import re
 from abc import ABC, abstractmethod
@@ -33,7 +34,7 @@ class DiagnosticService:
 
 
 # ---------------------------------------------------------------------------
-# Interfaces — the contracts server.py (and UdsServiceRepository) depend on
+# Interfaces — pure abstractions, no spaCy/LangChain/Azure dependency here
 # ---------------------------------------------------------------------------
 
 class IServiceRepository(ABC):
@@ -49,7 +50,7 @@ class IServiceRepository(ABC):
 
     @abstractmethod
     def search_by_description(self, query: str, limit: int = 3) -> list[DiagnosticService]:
-        """Ranked keyword search over name and description."""
+        """Natural-language search, delegated entirely to the injected matcher."""
 
 
 class IDataSource(ABC):
@@ -60,14 +61,23 @@ class IDataSource(ABC):
         ...
 
 
+class ISimilarityRanker(ABC):
+    """
+    Optional collaborator: ranks services against a query by embedding similarity.
+    Returns (service, score) pairs — a shortlist, not a final answer.
+    """
+
+    @abstractmethod
+    def rank(
+        self, query: str, services: Iterable[DiagnosticService], top_k: int = 5
+    ) -> list[tuple[DiagnosticService, float]]:
+        ...
+
+
 class ISemanticMatcher(ABC):
     """
-    Optional collaborator: ranks services against a natural-language query using an LLM.
-
-    Injected into UdsServiceRepository so the repository never depends on a
-    concrete LLM provider (Dependency Inversion). Swapping Azure for OpenAI,
-    Anthropic, etc. later means writing a new class elsewhere — zero changes
-    to UdsServiceRepository.
+    Optional collaborator: decides the final natural-language match, typically
+    by combining a similarity ranker with an LLM verification step.
     """
 
     @abstractmethod
@@ -94,7 +104,6 @@ class JsonFileDataSource(IDataSource):
 
 
 _SID_PATTERN = re.compile(r"^0x[0-9a-fA-F]{1,2}$", re.IGNORECASE)
-_TOKEN_PATTERN = re.compile(r"[a-z0-9]+")
 
 
 def normalize_sid(sid: str) -> str:
@@ -111,7 +120,7 @@ def looks_like_sid(text: str) -> bool:
 
 
 class UdsServiceRepository(IServiceRepository):
-    """UDS implementation of IServiceRepository, with in-memory lookup indexes."""
+    """UDS implementation of IServiceRepository."""
 
     def __init__(self, source: IDataSource, matcher: Optional[ISemanticMatcher] = None) -> None:
         services = list(source.load())
@@ -130,24 +139,13 @@ class UdsServiceRepository(IServiceRepository):
         return self._by_name.get(name.strip().lower())
 
     def search_by_description(self, query: str, limit: int = 3) -> list[DiagnosticService]:
-        query_tokens = set(_TOKEN_PATTERN.findall(query.lower()))
-        scored: list[tuple[int, DiagnosticService]] = []
-
-        if query_tokens:
-            for service in self._services:
-                name_tokens = set(_TOKEN_PATTERN.findall(service.name.lower()))
-                desc_tokens = set(_TOKEN_PATTERN.findall(service.description.lower()))
-                # Name matches weigh more than description matches.
-                score = 3 * len(query_tokens & name_tokens) + len(query_tokens & desc_tokens)
-                if score > 0:
-                    scored.append((score, service))
-            scored.sort(key=lambda pair: pair[0], reverse=True)
-
-        if scored:
-            return [service for _, service in scored[:limit]]
-
-        # Keyword matching found nothing — fall back to the LLM, if one was injected.
-        if self._matcher is not None:
-            return self._matcher.find_best_matches(query, self._services, limit)
-
-        return []
+        """
+        UDS service names/descriptions are a fixed, standardized vocabulary
+        (ISO 14229) — we do not tokenize, split, or rewrite them. All
+        free-text matching is delegated to the injected semantic matcher.
+        With no matcher configured, this correctly returns no matches rather
+        than guessing with weak keyword heuristics.
+        """
+        if self._matcher is None:
+            return []
+        return self._matcher.find_best_matches(query, self._services, limit)

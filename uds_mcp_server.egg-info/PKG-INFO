@@ -8,5 +8,7 @@ Requires-Dist: langchain>=1.4.6
 Requires-Dist: langchain-community>=0.4.2
 Requires-Dist: langchain-openai>=1.7.2
 Requires-Dist: mcp<2.0.0
+Requires-Dist: numpy>=2.2.6
 Requires-Dist: python-dotenv>=1.2.4
 Requires-Dist: requests>=2.34.2
+Requires-Dist: spacy>=3.8.16

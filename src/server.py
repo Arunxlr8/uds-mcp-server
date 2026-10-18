@@ -36,9 +36,13 @@ mcp = FastMCP("uds-diagnostics")
 def _build_matcher() -> Optional[ISemanticMatcher]:
     if os.getenv("UDS_ENABLE_LLM_MATCH", "false").strip().lower() != "true":
         return None
-    from src.llm_matcher import AzureLLMMatcher  # imported lazily: no hard Azure dependency
+    # Imported lazily: spaCy's model + Azure are heavy/optional dependencies,
+    # only needed when the LLM-backed search path is actually enabled.
+    from src.semantic_matcher import TieredSemanticMatcher
+    from src.similarity_ranker import SpacyCosineRanker
 
-    return AzureLLMMatcher()
+    candidate_k = int(os.getenv("UDS_LLM_CANDIDATE_K", "5"))
+    return TieredSemanticMatcher(ranker=SpacyCosineRanker(), candidate_k=candidate_k)
 
 
 def _build_repository() -> IServiceRepository:

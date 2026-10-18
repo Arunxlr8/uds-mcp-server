@@ -3,7 +3,9 @@ pyproject.toml
 src/__init__.py
 src/repository.py
 src/scraper.py
+src/semantic_matcher.py
 src/server.py
+src/similarity_ranker.py
 uds_mcp_server.egg-info/PKG-INFO
 uds_mcp_server.egg-info/SOURCES.txt
 uds_mcp_server.egg-info/dependency_links.txt
